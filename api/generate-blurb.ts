@@ -60,7 +60,7 @@ Respond in this exact JSON format (no markdown, no backticks):
       .map((block: any) => block.text)
       .join('');
 
-    const clean = text.replace(/'''json'''|/g, ").trim();
+    const clean = text.replace(/```json```/g, "").trim();
     const parsed = JSON.parse(clean);                           
     return res.status(200).json(parsed);
   } catch (error: any) {
