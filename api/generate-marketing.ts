@@ -20,7 +20,7 @@ export default async function handler(req: any, res: any) {
     const message = await client.messages.create({
       model: 'claude-sonnet-4-6',
       max_tokens: 4000,
-      messages: [{ role: 'user', content: `Generate a complete book marketing package for: Title: "${title}", Genre: ${genre}, Blurb: ${blurb}, Launch: ${launchDate}. Respond in JSON only with keys: socialPosts, emails, adCopy, calendar, promoSites. No markdown, no backticks.` }],
+      messages: [{ role: 'user', content: `Generate a complete book marketing package for: Title: "${title}", Genre: ${genre}, Blurb: ${blurb}, Launch: ${launchDate}. Respond in JSON only with keys: socialPosts, emails, adCopy, calendar, promoSites. No markdown, no backticks. IMPORTANT: Do not use apostrophes or single quotes in any text values. Use only double quotes for JSON strings. Escape all special characters properly.` }],
     });
 
     const raw = message.content.filter((b: any) => b.type === 'text').map((b: any) => b.text).join('');
@@ -34,11 +34,6 @@ export default async function handler(req: any, res: any) {
       const end = raw.lastIndexOf('}');
       if (start !== -1 && end !== -1) jsonStr = raw.slice(start, end + 1);
     }
-    
-    jsonStr = jsonStr.replace(/[\x00-\x1F\x7F]/g, (c: string) => {
-      if (c === '\n' || c === '\r' || c === '\t') return c;
-      return '';
-    });
 
     const parsed = JSON.parse(jsonStr);
     return res.status(200).json(parsed);
