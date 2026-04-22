@@ -1,0 +1,10 @@
+﻿{
+  "functions": {
+    "api/generate-marketing.ts": {
+      "maxDuration": 60
+    },
+    "api/generate-blurb.ts": {
+      "maxDuration": 30
+    }
+  }
+}
