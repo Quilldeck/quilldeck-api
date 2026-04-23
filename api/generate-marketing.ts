@@ -12,7 +12,7 @@ export default async function handler(req: any, res: any) {
   if (!title || !genre) return res.status(400).json({ error: 'Missing fields' });
   try {
     const message = await client.messages.create({
-      model: 'claude-sonnet-4-20250514',
+      model: 'claude-sonnet-4-5',
       max_tokens: 4000,
       messages: [{ role: 'user', content: 'Return only valid JSON, no markdown, no backticks, no apostrophes in values. Generate a marketing package for: Title: ${title}, Genre: ${genre}, Blurb: ${blurb}, Launch: ${launchDate}. Structure: {"socialPosts":[{"platform":"booktok","content":"...","hashtags":["tag"]}],"emails":[{"type":"pre-launch","subjectLine":"...","subjectLineAlt":"...","body":"..."}],"adCopy":[{"headline":"...","body":"...","keywords":["kw"]}],"calendar":[{"day":1,"date":"Day 1","platform":"X","postType":"teaser","content":"..."}],"promoSites":[{"name":"BookBub","url":"https://bookbub.com","cost":"varies","genre":"${genre}","notes":"..."}]}. Include 5 socialPosts, 3 emails, 3 adCopy, 14 calendar days, 5 promoSites.' }],
     });
